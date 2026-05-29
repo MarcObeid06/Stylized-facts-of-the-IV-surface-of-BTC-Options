@@ -1,4 +1,3 @@
-````markdown
 # Stylized Facts of the Implied Volatility Surface of Bitcoin Options
 
 **An empirical study of maturity effects, skew, risk reversals and butterfly dynamics in BTC option markets.**
@@ -173,6 +172,3 @@ This project builds on classical and recent work on option pricing, implied vola
 Bachelor of Science, École Polytechnique
 Research supervised by **Prof. Eduardo Abi Jaber**
 Centre de Mathématiques Appliquées (CMAP)
-
-```
-```
