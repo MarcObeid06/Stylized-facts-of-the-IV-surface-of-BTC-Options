@@ -1,80 +1,116 @@
 # Stylized Facts of the Implied Volatility Surface of Bitcoin Options
 
-**An empirical study of maturity effects, skew, risk reversals and butterfly dynamics in BTC option markets.**
+<p align="center">
+  <b>An Empirical Study of Maturity Effects, Skew, Risk Reversals and Butterfly Dynamics</b>
+</p>
 
-This repository contains the code and analysis behind a research project on the Bitcoin options implied-volatility surface. The study uses two years of BTC option data to investigate how implied volatility depends on strike, maturity and time, with a focus on volatility smiles, risk reversals, butterfly spreads and spot-regime dependence.
+<p align="center">
+  Bitcoin options · Implied volatility · Volatility smile · Risk reversals · Butterflies · Stochastic skew
+</p>
 
 ---
 
 ## Overview
 
-The project starts from the Black--Scholes implied-volatility inversion problem and treats implied volatility as a market observable rather than as a constant model parameter. The empirical analysis then studies the BTC volatility surface across moneyness, maturity and time.
+This repository contains the code and analysis for an empirical study of the Bitcoin options implied-volatility surface. The project studies how BTC implied volatility varies across strike, maturity and time, with a focus on volatility smiles, risk reversals, butterfly dynamics and spot-regime dependence.
 
-The main question is:
+The report is structured around three parts:
 
-> How does the BTC implied-volatility smile behave across maturities and market regimes, and how does it compare with more classical equity-index skew behaviour?
+1. implied volatility, Black--Scholes inversion and BTC volatility smiles;
+2. SPX at-the-money skew as a reference case;
+3. BTC risk-reversal and butterfly dynamics across maturities and market regimes.
 
 ---
 
 ## Data
 
-The empirical part uses SVI-implied volatility data for BTC options on Deribit, covering:
+The empirical analysis uses SVI-implied volatility data for BTC options on Deribit.
 
-- **Period:** 1 January 2023 -- 27 February 2025  
-- **Observations:** 188,277  
-- **Timestamps:** 8,903  
-- **Calendar days:** 788  
-- **Variables:** ATM implied volatility, OTM call/put implied volatilities, BTC index price, underlying price, exchange and time to expiration  
+| Item           | Description                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------- |
+| Period         | 1 Jan 2023 -- 27 Feb 2025                                                                 |
+| Observations   | 188,277                                                                                   |
+| Timestamps     | 8,903                                                                                     |
+| Calendar days  | 788                                                                                       |
+| Surface inputs | ATM IV, OTM call/put IVs, BTC index price, underlying price, exchange, time to expiration |
 
-The dataset contains implied volatilities at standardized moneyness levels, from 40% OTM puts to 40% OTM calls.
-
----
-
-## Structure of the Study
-
-### 1. Implied Volatility and BTC Option Smiles
-
-The first part introduces the Black--Scholes framework and the implied-volatility inversion problem. Numerical methods such as bisection, Newton--Raphson, hybrid Newton/bisection and Brent's method are compared on synthetic option prices.
-
-The BTC data then shows that implied volatility cannot be described by a single volatility number. It forms a dynamic surface depending on:
-
-- moneyness,
-- maturity,
-- calendar time,
-- market regime.
-
-Short maturities display steeper smiles and stronger wing effects, while longer maturities are generally smoother.
+The implied-volatility surface is observed at standardized moneyness levels, from 40% OTM puts to 40% OTM calls.
 
 ---
 
-### 2. SPX ATM Skew as a Reference Case
+## Methodology
 
-The second part uses the SPX market as a benchmark. Since SPX options usually display persistent negative skew, the SPX ATM skew term structure provides a useful comparison for BTC.
+### 1. Implied volatility and BTC smiles
 
-Several maturity-decay models are calibrated to the SPX ATM skew:
+The first part recalls the Black--Scholes implied-volatility inversion problem and compares classical numerical inversion methods:
 
-- fractional power law,
-- shifted power law,
-- single-scale exponential model,
-- two-exponential model.
+* bisection,
+* Newton--Raphson,
+* hybrid Newton/bisection,
+* Brent's method.
 
-The results show that even in a mature equity-index market, the ATM skew term structure is not fully captured by a single power law. Regularized or multi-scale models are needed.
+The BTC data then shows that implied volatility cannot be described by a single constant volatility. It forms a dynamic surface depending on moneyness, maturity and time.
 
 ---
 
-### 3. BTC Risk Reversals and Butterfly Dynamics
+### 2. SPX ATM skew benchmark
 
-The main empirical contribution studies two smile diagnostics:
+The SPX market is used as a reference case because equity-index options usually display persistent negative skew. Several parametric models are calibrated to the SPX ATM skew term structure:
 
-$RR_q(T,t) = \sigma^{call}_{q\%OTM}(T,t) - \sigma^{put}_{q\%OTM}(T,t) $ and
+* fractional power law,
+* shifted power law,
+* single-scale exponential model,
+* two-exponential model.
 
-$BF_q(T,t) = \frac{1}{2} \left(\sigma^{call}_{q\%OTM}(T,t)+\sigma^{put}_{q\%OTM}(T,t)\right) -\sigma^{ATM}(T,t).$
+This benchmark shows that even a mature equity-index market requires regularized or multi-scale descriptions of the ATM skew term structure.
 
-Risk reversals measure directional smile asymmetry, while butterflies measure non-directional smile curvature.
+---
 
-A daily constant-maturity panel is built by interpolating across maturities on the grid:
+### 3. BTC risk reversals and butterflies
 
-5, 7, 12, 20, 30, 42, 56, 74, 90, 120, 150, 180, 240, 270, 330, 360 days
+For (q \in {10,20,30,40}), the (q%) risk reversal is defined as
+
+[
+RR_q(T,t)
+=========
+
+## \sigma^{\mathrm{call}}_{q%\mathrm{OTM}}(T,t)
+
+\sigma^{\mathrm{put}}_{q%\mathrm{OTM}}(T,t).
+]
+
+It measures the directional asymmetry of the smile. A negative value means that OTM puts are richer than OTM calls; a positive value means that OTM calls are richer than OTM puts.
+
+The (q%) butterfly is defined as
+
+[
+BF_q(T,t)
+=========
+
+\frac{1}{2}
+\left(
+\sigma^{\mathrm{call}}*{q%\mathrm{OTM}}(T,t)
++
+\sigma^{\mathrm{put}}*{q%\mathrm{OTM}}(T,t)
+\right)
+-------
+
+\sigma^{\mathrm{ATM}}(T,t).
+]
+
+It measures non-directional smile curvature: how expensive the two wings are relative to ATM implied volatility.
+
+---
+
+## Constant-Maturity Panel
+
+To compare smile indicators through time, the raw option surface is interpolated onto a daily constant-maturity panel. The selected target maturities are:
+
+| Short            | Medium              | Long                         |
+| ---------------- | ------------------- | ---------------------------- |
+| 5, 7, 12, 20, 30 | 42, 56, 74, 90, 120 | 150, 180, 240, 270, 330, 360 |
+
+No extrapolation is used. If a target maturity lies outside the available maturity range at a given timestamp, the value is left missing.
 
 ---
 
@@ -82,28 +118,28 @@ A daily constant-maturity panel is built by interpolating across maturities on t
 
 ### Maturity-dependent BTC skew
 
-BTC risk reversals are strongly maturity-dependent. Short maturities are put-skewed on average, meaning that short-dated OTM puts are richer than OTM calls. However, the negative skew weakens rapidly with maturity, and longer maturities become close to symmetric or mildly call-skewed.
+BTC risk reversals are strongly maturity-dependent. Short maturities are put-skewed on average, while longer maturities become closer to symmetric and can even become mildly call-skewed.
 
-The finite-difference ATM skew changes sign around the medium-maturity range, unlike the SPX ATM skew, which remains persistently negative.
+The finite-difference ATM skew therefore changes sign, unlike the SPX ATM skew, which remains persistently negative.
 
 ---
 
-### Regime-dependent risk reversals
+### Regime-dependent smile asymmetry
 
 BTC smile asymmetry depends strongly on the spot regime.
 
-During persistent rallies, short-dated BTC options can become call-skewed: upside calls become richer than downside puts. During selloffs, the short-end risk reversal becomes sharply negative, reflecting stronger demand for crash protection.
-
-This makes BTC different from the classical equity-index case, where negative skew is more persistent.
+During persistent rallies, short-dated BTC options can become call-skewed: upside calls become richer than downside puts. During selloffs, the short-end risk reversal becomes sharply negative, reflecting stronger demand for downside protection.
 
 ---
 
-### Spot-trend drivers
+### Spot-trend drivers of (RR_{10})
 
-The strongest descriptive drivers of `RR10` are:
+The strongest descriptive drivers of (RR_{10}) are:
 
-* the **20-day BTC return**,
-* the **30-day return persistence**, measured as the fraction of positive daily returns over the previous 30 days.
+| Driver                    | Interpretation                                               |
+| ------------------------- | ------------------------------------------------------------ |
+| 20-day BTC return         | Size of the recent BTC trend                                 |
+| 30-day return persistence | Fraction of positive daily returns over the previous 30 days |
 
 This suggests that BTC smile asymmetry reacts not only to isolated daily moves, but also to sustained market regimes.
 
@@ -111,13 +147,13 @@ This suggests that BTC smile asymmetry reacts not only to isolated daily moves, 
 
 ### Butterfly term structure
 
-Butterflies behave differently from risk reversals. They remain positive and are much less sensitive to spot regimes.
+Butterflies behave differently from risk reversals. They remain positive, are less sensitive to spot regimes, and mainly describe short-end smile curvature.
 
-The average `BF10` term structure is well described by a simple power-law decay:
+The average (BF_{10}) term structure is well described by a simple power-law decay:
 
-$$
+[
 BF_{10}(T) = A T^{-\beta}.
-$$
+]
 
 Thus, BTC smile asymmetry is complex and regime-dependent, while BTC smile curvature has a simpler average maturity structure.
 
@@ -127,7 +163,7 @@ Thus, BTC smile asymmetry is complex and regime-dependent, while BTC smile curva
 
 The results support a stochastic-skew interpretation of the BTC volatility surface. The smile should not be viewed as a fixed deterministic curve: its direction changes with market conditions.
 
-The average long-maturity smile may look close to symmetric, while the conditional smile on a given date can be strongly put-skewed or call-skewed depending on the BTC spot regime.
+The average long-maturity smile can look close to symmetric, while the conditional smile on a given date can become strongly put-skewed or call-skewed depending on the BTC spot regime.
 
 ---
 
@@ -137,22 +173,31 @@ The study is descriptive. The spot-regime classification is mechanical, and the 
 
 Possible extensions include:
 
-* repeating the analysis on newer BTC option data,
-* comparing BTC with other crypto underlyings,
-* testing stochastic-volatility or stochastic-skew models,
+* extending the analysis to newer BTC data;
+* comparing BTC with other crypto underlyings;
+* testing stochastic-volatility or stochastic-skew models;
 * studying the impact of major crypto-market events on the level, skew and curvature of the implied-volatility surface.
 
 ---
 
 ## References
 
-This project builds on classical and recent work on option pricing, implied volatility, stochastic skew and ATM skew term structures, including Black--Scholes, Merton, Carr--Wu, Alexander--Imeraj, Guyon--El Amrani, and Delemotte--De Marco--Ségonne.
+The project builds on classical and recent work on option pricing, implied volatility, stochastic skew and ATM skew term structures:
+
+* Black and Scholes (1973)
+* Merton (1973)
+* Carr and Wu (2007)
+* Alexander and Imeraj (2023)
+* Guyon and El Amrani (2022)
+* Delemotte, De Marco and Ségonne (2023)
 
 ---
 
 ## Author
 
-**Marc Obeid**
-Bachelor of Science, École Polytechnique
-Research supervised by **Prof. Eduardo Abi Jaber**
-Centre de Mathématiques Appliquées (CMAP)
+|             |                                           |
+| ----------- | ----------------------------------------- |
+| Author      | Marc Obeid                                |
+| Institution | Bachelor of Science, École Polytechnique  |
+| Supervisor  | Prof. Eduardo Abi Jaber                   |
+| Laboratory  | Centre de Mathématiques Appliquées (CMAP) |
