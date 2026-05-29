@@ -66,22 +66,9 @@ The results show that even in a mature equity-index market, the ATM skew term st
 
 The main empirical contribution studies two smile diagnostics:
 
-$$
-RR_q(T,t) = \sigma^{call}_{q\%OTM}(T,t) - \sigma^{put}_{q\%OTM}(T,t)
-$$
+$RR_q(T,t) = \sigma^{call}_{q\%OTM}(T,t) - \sigma^{put}_{q\%OTM}(T,t) $ and
 
-and
-
-$$
-BF_q(T,t) =
-\frac{1}{2}
-\left(
-\sigma^{call}_{q\%OTM}(T,t)
-+
-\sigma^{put}_{q\%OTM}(T,t)
-\right) -
-\sigma^{ATM}(T,t).
-$$
+$BF_q(T,t) = \frac{1}{2} \left(\sigma^{call}_{q\%OTM}(T,t)+\sigma^{put}_{q\%OTM}(T,t)\right) -\sigma^{ATM}(T,t).$
 
 Risk reversals measure directional smile asymmetry, while butterflies measure non-directional smile curvature.
 
