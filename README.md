@@ -79,8 +79,7 @@ BF_q(T,t) =
 \sigma^{call}_{q\%OTM}(T,t)
 +
 \sigma^{put}_{q\%OTM}(T,t)
-\right)
--
+\right) -
 \sigma^{ATM}(T,t).
 $$
 
