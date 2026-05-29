@@ -74,9 +74,7 @@ Risk reversals measure directional smile asymmetry, while butterflies measure no
 
 A daily constant-maturity panel is built by interpolating across maturities on the grid:
 
-```text
 5, 7, 12, 20, 30, 42, 56, 74, 90, 120, 150, 180, 240, 270, 330, 360 days
-````
 
 ---
 
