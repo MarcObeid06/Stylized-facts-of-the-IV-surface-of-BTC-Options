@@ -68,15 +68,15 @@ This benchmark shows that even a mature equity-index market requires regularized
 
 ### 3. BTC Risk Reversals and Butterflies
 
-For $q \in \{10,20,30,40\}$, the $q\%$ risk reversal is defined as
+For $q \in (10,20,30,40)$, the $q$ pct risk reversal is defined as
 
-$$RR_q(T,t) = \sigma^{\mathrm{call}}_{q\%\mathrm{OTM}}(T,t) - \sigma^{\mathrm{put}}_{q\%\mathrm{OTM}}(T,t).$$
+$$RR_q(T,t) = \sigma^{\mathrm{call}}_{q\mathrm{OTM}}(T,t) - \sigma^{\mathrm{put}}_{q\mathrm{OTM}}(T,t).$$
 
 It measures the directional asymmetry of the smile. A negative value means that OTM puts are richer than OTM calls; a positive value means that OTM calls are richer than OTM puts.
 
 The $q\%$ butterfly is defined as
 
-$$BF_q(T,t) = \frac{1}{2}\left(\sigma^{\mathrm{call}}_{q\%\mathrm{OTM}}(T,t) + \sigma^{\mathrm{put}}_{q\%\mathrm{OTM}}(T,t)\right) - \sigma^{\mathrm{ATM}}(T,t).$$
+$$BF_q(T,t) = \frac{1}{2}\left(\sigma^{\mathrm{call}}_{q\mathrm{OTM}}(T,t) + \sigma^{\mathrm{put}}_{q\mathrm{OTM}}(T,t)\right) - \sigma^{\mathrm{ATM}}(T,t).$$
 
 It measures non-directional smile curvature: how expensive the two wings are relative to ATM implied volatility.
 
